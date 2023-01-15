@@ -30,6 +30,18 @@ It also accepts a location name or address, e.g.:
 $ mercator miami
 ```
 
+### Style
+
+`mercator` accepts the `-style` flag with an integer value representing one of 
+the options [listed as 
+`Style`](https://github.com/mrusme/mercator/blob/master/mapview/mapview.go#L24), 
+e.g.:
+
+```sh
+$ mercator -style 4 new york
+```
+
+
 ### Navigation
 
 - `arrow up`/`k`: Move north

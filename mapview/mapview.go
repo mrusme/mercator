@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"image/color"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -141,30 +142,48 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		var hit = false
+		movement := (1000 / math.Pow(2, float64(m.zoom))) / 3
+
 		switch {
 
 		case key.Matches(msg, m.KeyMap.Up):
-			m.lat += 0.05
+			m.lat += movement
+			if m.lat > 90.0 {
+				m.lat = -90.0
+			}
 			hit = true
 
 		case key.Matches(msg, m.KeyMap.Right):
-			m.lng += 0.05
+			m.lng += movement
+			if m.lng > 180.0 {
+				m.lng = -180.0
+			}
 			hit = true
 
 		case key.Matches(msg, m.KeyMap.Down):
-			m.lat -= 0.05
+			m.lat -= movement
+			if m.lat < -90.0 {
+				m.lat = 90.0
+			}
 			hit = true
 
 		case key.Matches(msg, m.KeyMap.Left):
-			m.lng -= 0.05
+			m.lng -= movement
+			if m.lng < -180.0 {
+				m.lng = 180.0
+			}
 			hit = true
 
 		case key.Matches(msg, m.KeyMap.ZoomIn):
-			m.zoom += 1
+			if m.zoom < 16 {
+				m.zoom += 1
+			}
 			hit = true
 
 		case key.Matches(msg, m.KeyMap.ZoomOut):
-			m.zoom -= 1
+			if m.zoom > 2 {
+				m.zoom -= 1
+			}
 			hit = true
 
 		}
@@ -211,7 +230,7 @@ func (m *Model) render(width, height int) tea.Cmd {
 
 		ascii, err := ansimage.NewScaledFromImage(
 			img,
-			height,
+			(height * 2),
 			width,
 			color.Transparent,
 			ansimage.ScaleModeFill,

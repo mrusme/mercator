@@ -19,6 +19,23 @@ import (
 	"github.com/golang/geo/s2"
 )
 
+type Style int8
+
+const (
+	Wikimedia Style = iota
+	OpenStreetMaps
+	OpenTopoMap
+	OpenCycleMap
+	CartoLight
+	CartoDark
+	StamenToner
+	StamenTerrain
+	ThunderforestLandscape
+	ThunderforestOutdoors
+	ThunderforestTransport
+	ArcgisWorldImagery
+)
+
 type MapRender string
 type MapCoordinates struct {
 	Lat float64
@@ -83,12 +100,13 @@ type Model struct {
 
 	initialized bool
 
-	osm       *sm.Context
-	lat       float64
-	lng       float64
-	loc       string
-	zoom      int
-	maprender string
+	osm          *sm.Context
+	tileProvider *sm.TileProvider
+	lat          float64
+	lng          float64
+	loc          string
+	zoom         int
+	maprender    string
 }
 
 func New(width, height int) (m Model) {
@@ -102,6 +120,7 @@ func (m *Model) setInitialValues() {
 	m.KeyMap = DefaultKeyMap()
 	m.osm = sm.NewContext()
 	m.osm.SetSize(400, 400)
+	m.tileProvider = sm.NewTileProviderOpenStreetMaps()
 	m.zoom = 15
 	m.lat = 25.0782266
 	m.lng = -77.3383438
@@ -111,6 +130,7 @@ func (m *Model) setInitialValues() {
 }
 
 func (m *Model) applyToOSM() {
+	m.osm.SetTileProvider(m.tileProvider)
 	m.osm.SetCenter(s2.LatLngFromDegrees(m.lat, m.lng))
 	m.osm.SetZoom(m.zoom)
 }
@@ -125,6 +145,36 @@ func (m *Model) SetLatLng(lat float64, lng float64, zoom int) {
 func (m *Model) SetLocation(loc string, zoom int) {
 	m.loc = loc
 	m.zoom = zoom
+	m.applyToOSM()
+}
+
+func (m *Model) SetStyle(style Style) {
+	switch style {
+	case Wikimedia:
+		m.tileProvider = sm.NewTileProviderWikimedia()
+	case OpenStreetMaps:
+		m.tileProvider = sm.NewTileProviderOpenStreetMaps()
+	case OpenTopoMap:
+		m.tileProvider = sm.NewTileProviderOpenTopoMap()
+	case OpenCycleMap:
+		m.tileProvider = sm.NewTileProviderOpenCycleMap()
+	case CartoLight:
+		m.tileProvider = sm.NewTileProviderCartoLight()
+	case CartoDark:
+		m.tileProvider = sm.NewTileProviderCartoDark()
+	case StamenToner:
+		m.tileProvider = sm.NewTileProviderStamenToner()
+	case StamenTerrain:
+		m.tileProvider = sm.NewTileProviderStamenTerrain()
+	case ThunderforestLandscape:
+		m.tileProvider = sm.NewTileProviderThunderforestLandscape()
+	case ThunderforestOutdoors:
+		m.tileProvider = sm.NewTileProviderThunderforestOutdoors()
+	case ThunderforestTransport:
+		m.tileProvider = sm.NewTileProviderThunderforestTransport()
+	case ArcgisWorldImagery:
+		m.tileProvider = sm.NewTileProviderArcgisWorldImagery()
+	}
 	m.applyToOSM()
 }
 

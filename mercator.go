@@ -1,7 +1,7 @@
 package main
 
 import (
-	"os"
+	"flag"
 	"strconv"
 	"strings"
 
@@ -14,9 +14,17 @@ type model struct {
 }
 
 func main() {
-	args := os.Args[1:]
+	var style int
+	flag.IntVar(&style, "style", int(mapview.OpenStreetMaps), "map style to use (0 - 11)")
+	flag.Parse()
+
+	args := flag.Args()
 
 	m := NewModel()
+
+	if style >= 0 && style < 12 {
+		m.mv.SetStyle(mapview.Style(style))
+	}
 
 	var isLatLng bool = false
 	if len(args) == 2 {
@@ -27,7 +35,7 @@ func main() {
 			m.mv.SetLatLng(lat, lng, 15)
 		}
 	}
-	if len(args) < 2 || len(args) > 2 && !isLatLng {
+	if !isLatLng {
 		m.mv.SetLocation(strings.Join(args, " "), 15)
 	}
 

@@ -179,6 +179,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		return m, nil
 
 	case MapCoordinates:
+		m.loc = ""
 		if msg.Err != nil {
 			m.maprender = msg.Err.Error()
 		} else {
@@ -192,7 +193,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 
 	if m.initialized && m.loc != "" {
 		cmds = append(cmds, m.lookup(m.loc))
-		m.loc = ""
 		return m, tea.Batch(cmds...)
 	}
 

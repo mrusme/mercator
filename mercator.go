@@ -4,7 +4,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/mrusme/mercator/mapview"
@@ -13,8 +12,6 @@ import (
 type model struct {
 	mv mapview.Model
 }
-
-type tickMsg time.Time
 
 func main() {
 	args := os.Args[1:]

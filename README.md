@@ -30,6 +30,16 @@ It also accepts a location name or address, e.g.:
 $ mercator miami
 ```
 
+### Navigation
+
+- `arrow up`/`k`: Move north
+- `arrow right`/`l`: Move east
+- `arrow down`/`j`: Move south
+- `arrow left`/`h`: Move west
+- `-`/`_`: Zoom out
+- `+`/`=`: Zoom in
+
+
 ## Bubble
 
 You can embed the `mapview` into your Bubble Tea application:

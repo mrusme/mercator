@@ -24,6 +24,7 @@ func main() {
 func NewModel() model {
 	m := model{}
 	m.mv = mapview.New(200, 120)
+	m.mv.SetLocation("New York", 15)
 	return m
 }
 

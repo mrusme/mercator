@@ -29,3 +29,30 @@ Type "++++"
 Sleep 8s
 Type "q"
 
+Sleep 2s
+Type "mercator -style 11 port royal jamaica"
+Sleep 500ms
+Enter
+
+Sleep 4s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "-"
+Sleep 1s
+Type "q"
+Sleep 1s
+

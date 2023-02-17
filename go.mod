@@ -29,8 +29,8 @@ require (
 	github.com/rivo/uniseg v0.4.3 // indirect
 	github.com/tkrajina/gpxgo v1.2.1 // indirect
 	golang.org/x/image v0.5.0 // indirect
-	golang.org/x/net v0.5.0 // indirect
-	golang.org/x/sys v0.4.0 // indirect
-	golang.org/x/term v0.4.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/term v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
 )
